@@ -94,21 +94,6 @@ public class ItemBuilder {
 }
 ```
 
-## Examples
-
-See [Animal Safe Builder](src/main/java/com/jouona/example/AnimalSafeBuilder.java) for the safe builder implementation 
-similar to that shown above.
-
-See [Animal Safe Builder 2](src/main/java/com/jouona/example/AnimalSafeBuilder2.java) for a different implementation
-that makes required fields more explicit. Some people might prefer this.
-
-See [Animal Unsafe Builder](src/main/java/com/jouona/example/AnimalUnsafeBuilder.java) for an unsafe builder 
-implementation.
-
-See [how all these builders differ in use](src/main/java/com/jouona/usage/UsageExamples.java). You can play around
-with different usages here by yourself to see their compile-time safety. <br/>
-If you actually want to run some code, you can use the [empty Main class](src/main/java/com/jouona/Main.java).
-
 ## Problems
 
 ### Lombok
@@ -179,3 +164,18 @@ This is arguably the biggest benefit of using a safe builder.
 
 It is enforced at compile-time that all required fields are set. This catches many errors upfront where you would 
 otherwise be throwing exceptions at runtime or even unwillingly crashing your application.
+
+## Examples
+
+See [Animal Safe Builder](src/main/java/com/jouona/example/AnimalSafeBuilder.java) for the safe builder implementation 
+similar to that shown above.
+
+See [Animal Safe Builder 2](src/main/java/com/jouona/example/AnimalSafeBuilder2.java) for a different implementation
+that makes required fields more explicit. Some people might prefer this.
+
+See [Animal Unsafe Builder](src/main/java/com/jouona/example/AnimalUnsafeBuilder.java) for an unsafe builder 
+implementation.
+
+See [how all these builders differ in use](src/main/java/com/jouona/usage/UsageExamples.java). You can play around
+with different usages here by yourself to see their compile-time safety. <br/>
+If you actually want to run some code, you can use the [empty Main class](src/main/java/com/jouona/Main.java).
