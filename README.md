@@ -8,7 +8,7 @@
   - [Building Order](#building-order-problem)
 - [Benefits](#Benefits)
   - [Building Order](#building-order-benefit)
-  - [<u>**Compile-Time Safety**</u>](#compile-time-safety)
+  - [*<u>**Compile-Time Safety**</u>*](#compile-time-safety)
 - [Examples](#Examples)
 
 ## Introduction
