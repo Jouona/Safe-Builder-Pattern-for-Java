@@ -4,11 +4,14 @@
 - [Introduction](#Introduction)
 - [Safer Builder Pattern](#Safer-Builder-Pattern)
 - [Problems](#Problems)
-  - [Lombok](#lombok)
   - [Building Order](#building-order-problem)
+  - [Interface explosion](#interface-explosion)
 - [Benefits](#Benefits)
   - [Building Order](#building-order-benefit)
   - [*<u>**Compile-Time Safety**</u>*](#compile-time-safety)
+- [Support](#support)
+  - [Lombok](#lombok)
+  - [IntelliJ](#intellij)
 - [Examples](#Examples)
 
 ## Introduction
@@ -27,6 +30,19 @@ strength of the pattern if it wasn't consequently used to create objects that al
 
 Clearly, we need a safer builder pattern that can *enforce required fields*.
 
+### Note
+
+I later learned this is a known, more niche pattern, commonly called the Step-Builder pattern.<br/>
+I'm keeping my own name in this repo, since I built it from first principles before finding the existing name for it. 
+See [here](https://java-design-patterns.com/patterns/step-builder/#intent-of-step-builder-design-pattern) for a 
+discussion of this pattern that focuses on constructing complex objects clearly, rather than on compile-time safety.
+
+The name that I came up with is the **Safe Builder pattern** that highlights its compile-time-safety benefits, which was 
+what I was initially looking for. 
+
+During my research, I did not find any discussions about this pattern's compile-time-safety benefits. Therefore, this
+write-up focuses on that angle.
+
 ## Safer Builder Pattern
 
 A safer builder pattern can be achieved by defining an interface for each **building step** in a Builder class.
@@ -38,7 +54,7 @@ The outer class will provide a start-method that returns the interface defined f
 The interfaces will effectively "pass" the builder to the next step (or rather the next interface), allowing for a safer 
 construction. This way, you will only allow to call build on the very last step.
 
-The last step is special, as it will not only define a build method but it also defines all **optional steps**.
+The last step is special, as it will not only define a build method, but it also defines all **optional steps**.
 
 ```Java
 public class ItemBuilder {
@@ -96,25 +112,15 @@ public class ItemBuilder {
 
 ## Problems
 
-### Lombok
-
-Lombok does not implement this safe builder. Therefore, you would currently have to implement them yourself. This
-arguably does not take as much time as expected once you get used to the safe builder pattern, but it for sure takes
-more time than annotating your classes with Lombok's `@Builder` annotation.
-
-Implementing builders yourself can possibly open your mind to new ways of thinking about object construction, though. 
-You can possibly offload some construction logic to the builders that would otherwise live in the class itself, which 
-can be quite useful in practice.
-
-In theory, however, this safe-builder pattern **could be automated**.
-
 ### Building order <a name="building-order-problem"></a>
 
 This safer implementation of the builder pattern introduces an order for building objects. This can break existing
-projects.
+ projects, and they will need to be updated to match the new order.
 
-Though, arguably, it is best to have an enforced order for ease of use during development. An explicit order can help
-avoid confusion, especially when creating many objects at once.
+### Interface explosion
+
+You will have to write lots of interfaces. If you regularly update the builder logic, it might become a maintenance 
+burden.
 
 ## Benefits
 
@@ -124,7 +130,7 @@ Building order is also a potential benefit. An explicit order can help avoid con
 objects at once, where you might be more vulnerable to mixing up some values without an explicit order.
 
 See how the *order of the builder methods is not enforced* in the example below. It is quite hard to see that the
-order was messed up two times which caused animal's races to be set to their names and the other way around.
+order was messed up once which caused an animal's race to be set to its name and the other way around.
 
 ```Java
 import com.jouona.example.Animal;
@@ -165,15 +171,34 @@ This is arguably the biggest benefit of using a safe builder.
 It is enforced at compile-time that all required fields are set. This catches many errors upfront where you would 
 otherwise be throwing exceptions at runtime or even unwillingly crashing your application.
 
+## Support
+
+### Lombok
+
+Lombok does not implement this safe builder. Therefore, you would currently have to implement them yourself. This
+arguably does not take as much time as expected once you get used to the safe builder pattern, but it for sure takes
+more time than annotating your classes with Lombok's `@Builder` annotation.
+
+Implementing builders yourself can possibly open your mind to new ways of thinking about object construction, though.
+You can possibly offload some construction logic to the builders that would otherwise live in the class itself, which
+can be quite useful in practice.
+
+This safe-builder pattern could be automated. This is already being discussed, see 
+[here,](https://groups.google.com/g/project-lombok/c/gjUAHljdSK0?pli=1) for example.
+
+### IntelliJ
+
+IntelliJ has some plugins for the Step-Builder-Pattern on its Marketplace.
+
 ## Examples
 
-See [Animal Safe Builder](src/main/java/com/jouona/example/AnimalSafeBuilder.java) for the safe builder implementation 
+See [Animal Safe Builder](src/main/java/com/jouona/example/AnimalSafeBuilder.java) for the safe builder implementation
 similar to that shown above.
 
 See [Animal Safe Builder 2](src/main/java/com/jouona/example/AnimalSafeBuilder2.java) for a different implementation
 that makes required fields more explicit. Some people might prefer this.
 
-See [Animal Unsafe Builder](src/main/java/com/jouona/example/AnimalUnsafeBuilder.java) for an unsafe builder 
+See [Animal Unsafe Builder](src/main/java/com/jouona/example/AnimalUnsafeBuilder.java) for an unsafe builder
 implementation.
 
 See [how all these builders differ in use](src/main/java/com/jouona/usage/UsageExamples.java). You can play around
