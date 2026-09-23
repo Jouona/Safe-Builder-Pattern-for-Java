@@ -32,7 +32,7 @@ Clearly, we need a safer builder pattern that can *enforce required fields*.
 
 ### Note
 
-I later learned this is a known, more niche pattern, commonly called the Step-Builder pattern.<br/>
+I later learned this is a known, more niche pattern, commonly called the *Step-Builder pattern*.<br/>
 I'm keeping my own name in this repo, since I built it from first principles before finding the existing name for it. 
 See [here](https://java-design-patterns.com/patterns/step-builder/#intent-of-step-builder-design-pattern) for a 
 discussion of this pattern that focuses on constructing complex objects clearly, rather than on compile-time safety.
@@ -175,13 +175,15 @@ otherwise be throwing exceptions at runtime or even unwillingly crashing your ap
 
 ### Lombok
 
-Lombok does not implement this safe builder. Therefore, you would currently have to implement them yourself. This
-arguably does not take as much time as expected once you get used to the safe builder pattern, but it for sure takes
-more time than annotating your classes with Lombok's `@Builder` annotation.
+Lombok would be a perfect place for this pattern.
+
+Lombok does not currently implement it. Therefore, you would currently have to implement them yourself. This arguably
+does not take as much time as expected once you get used to the safe builder pattern, but it for sure takes more time 
+than annotating your classes with Lombok's `@Builder` annotation.
 
 Implementing builders yourself can possibly open your mind to new ways of thinking about object construction, though.
-You can possibly offload some construction logic to the builders that would otherwise live in the class itself, which
-can be quite useful in practice.
+You can possibly offload some construction logic to the builders that would otherwise live in the class itself. This
+offloading can be quite useful in practice.
 
 This safe-builder pattern could be automated. This is already being discussed, see 
 [here,](https://groups.google.com/g/project-lombok/c/gjUAHljdSK0?pli=1) for example.
