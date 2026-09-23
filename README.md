@@ -35,7 +35,7 @@ There will then be a private-scoped inner **builder** class that implements all 
 
 The outer class will provide a start-method that returns the interface defined for the first building step.
 
-The interfaces will effectively "pass" the builder to the next step (or rather interface), allowing for a safer 
+The interfaces will effectively "pass" the builder to the next step (or rather the next interface), allowing for a safer 
 construction. This way, you will only allow to call build on the very last step.
 
 The last step is special, as it will not only define a build method but it also defines all **optional steps**.
